@@ -154,6 +154,44 @@
       line-height: 1.45;
     }
 
+    .massage-card {
+      margin: 12px 18px;
+      padding: 28px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      box-shadow: 0 8px 24px rgba(80, 40, 20, 0.05);
+    }
+
+    .massage-card h2 {
+      margin: 0 0 12px;
+      font-size: 30px;
+      color: var(--orange);
+    }
+
+    .massage-card p {
+      margin: 0 0 20px;
+      color: var(--muted);
+      line-height: 1.5;
+      font-size: 17px;
+    }
+
+    .start-btn {
+      width: 100%;
+      border: none;
+      border-radius: 16px;
+      background: var(--orange);
+      color: white;
+      font-size: 18px;
+      font-weight: 800;
+      padding: 16px;
+      cursor: pointer;
+    }
+
+    .start-btn.started {
+      background: #1F9D55;
+    }
+
     .section-title {
       margin: 28px 18px 12px;
       font-size: 24px;
@@ -387,6 +425,15 @@
       <p>Вернитесь в тело. С этого начинается ваш день.</p>
     </section>
 
+    <section class="massage-card">
+      <h2>Самомассаж</h2>
+      <p>
+        Начните утро с мягкого внимания к телу.
+        Пройдитесь вниманием по лицу, шее, плечам и дыханию.
+      </p>
+      <button id="startRoutineBtn" class="start-btn">Начать комплекс</button>
+    </section>
+
     <main id="exerciseList"></main>
 
     <h2 class="section-title">Видео</h2>
@@ -450,6 +497,7 @@
     const progressFill = document.getElementById("progressFill");
     const resetBtn = document.getElementById("resetBtn");
     const timerValue = document.getElementById("timerValue");
+    const startRoutineBtn = document.getElementById("startRoutineBtn");
 
     const totalItems = exercises.length + videos.length;
 
@@ -479,6 +527,18 @@
       return Number(localStorage.getItem(TIMER_STOP_KEY)) || null;
     }
 
+    function updateStartButton() {
+      if (getTimerStart()) {
+        startRoutineBtn.textContent = "✓ Комплекс начат";
+        startRoutineBtn.classList.add("started");
+        startRoutineBtn.disabled = true;
+      } else {
+        startRoutineBtn.textContent = "Начать комплекс";
+        startRoutineBtn.classList.remove("started");
+        startRoutineBtn.disabled = false;
+      }
+    }
+
     function startTimerIfNeeded() {
       if (!getTimerStart()) {
         localStorage.setItem(TIMER_START_KEY, String(Date.now()));
@@ -489,6 +549,7 @@
       }
 
       updateTimer();
+      updateStartButton();
     }
 
     function stopTimerIfNeeded() {
@@ -599,6 +660,10 @@
       });
     }
 
+    startRoutineBtn.addEventListener("click", () => {
+      startTimerIfNeeded();
+    });
+
     document.addEventListener("click", (event) => {
       if (event.target.classList.contains("done-btn")) {
         toggleDone(event.target.dataset.id, event.target);
@@ -621,6 +686,7 @@
       renderVideos();
       updateProgress();
       updateTimer();
+      updateStartButton();
 
       window.scrollTo({ top: 0, behavior: "smooth" });
     });
@@ -629,8 +695,9 @@
     renderVideos();
     updateProgress();
     updateTimer();
+    updateStartButton();
 
-    if (getTimerStart() && !getTimerStop() && getCompletedCount() > 0) {
+    if (getTimerStart() && !getTimerStop()) {
       timerInterval = setInterval(updateTimer, 1000);
     }
   </script>
