@@ -63,16 +63,24 @@
     .sun {
       color: var(--orange);
       font-size: 30px;
-      line-height: 1;
     }
 
-    .counter {
-      font-size: 18px;
-      font-weight: 700;
+    .stats {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 2px;
       white-space: nowrap;
     }
 
-    .counter span {
+    .counter,
+    .timer {
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .counter span,
+    .timer span {
       color: var(--orange);
     }
 
@@ -92,21 +100,32 @@
       transition: width 0.25s ease;
     }
 
-    .hero {
+    .hero,
+    .day-note {
       margin: 18px;
       padding: 26px 24px;
       min-height: 330px;
       border-radius: 24px;
-      background:
-        linear-gradient(90deg, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.78) 48%, rgba(255,255,255,0.08) 100%),
-        url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80");
-      background-size: cover;
-      background-position: center;
       border: 1px solid var(--line);
       overflow: hidden;
+      background-size: cover;
+      background-position: center;
     }
 
-    .hero h1 {
+    .hero {
+      background:
+        linear-gradient(90deg, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.78) 50%, rgba(255,255,255,0.08) 100%),
+        url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80");
+    }
+
+    .day-note {
+      background:
+        linear-gradient(90deg, rgba(255,255,255,0.97) 0%, rgba(255,255,255,0.83) 55%, rgba(255,255,255,0.12) 100%),
+        url("https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=1200&q=80");
+    }
+
+    .hero h1,
+    .day-note h2 {
       margin: 0 0 12px;
       font-size: 38px;
       line-height: 1.05;
@@ -119,9 +138,18 @@
       line-height: 1.2;
     }
 
-    .hero p {
-      max-width: 330px;
+    .hero p,
+    .day-note p {
+      max-width: 370px;
       margin: 0 0 12px;
+      font-size: 17px;
+      line-height: 1.45;
+    }
+
+    .day-note ul {
+      max-width: 390px;
+      margin: 14px 0;
+      padding-left: 20px;
       font-size: 17px;
       line-height: 1.45;
     }
@@ -141,22 +169,25 @@
       box-shadow: 0 8px 24px rgba(80, 40, 20, 0.05);
     }
 
-    .exercise {
+    .exercise,
+    .video-card {
       display: grid;
       grid-template-columns: 44% 56%;
-      min-height: 190px;
+      min-height: 210px;
     }
 
     .exercise-img {
       width: 100%;
-      height: 100%;
-      min-height: 190px;
+      height: 210px;
       object-fit: cover;
+      object-position: center;
       display: block;
       background: #eee;
     }
 
-    .exercise-content {
+    .exercise-content,
+    .video-content {
+      min-height: 210px;
       padding: 18px;
       display: flex;
       flex-direction: column;
@@ -211,36 +242,18 @@
       transition: 0.2s ease;
     }
 
-    .done-btn:hover {
-      background: var(--orange-dark);
-    }
-
     .done-btn.done {
       background: #1F9D55;
     }
 
-    .video-card {
-      display: grid;
-      grid-template-columns: 44% 56%;
-      min-height: 170px;
-    }
-
     .video-preview {
+      height: 210px;
       background: var(--soft);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 54px;
       color: var(--orange);
-      min-height: 170px;
-    }
-
-    .video-content {
-      padding: 18px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 10px;
     }
 
     .video-content h3 {
@@ -272,7 +285,7 @@
     }
 
     .finish {
-      margin: 20px 18px 40px;
+      margin: 20px 18px 18px;
       padding: 24px;
       border-radius: 24px;
       background: var(--soft);
@@ -308,15 +321,22 @@
 
     @media (max-width: 520px) {
       .brand {
-        font-size: 20px;
+        font-size: 18px;
       }
 
-      .hero {
+      .counter,
+      .timer {
+        font-size: 14px;
+      }
+
+      .hero,
+      .day-note {
         min-height: 310px;
         padding: 22px 20px;
       }
 
-      .hero h1 {
+      .hero h1,
+      .day-note h2 {
         font-size: 34px;
       }
 
@@ -325,13 +345,14 @@
         grid-template-columns: 1fr;
       }
 
-      .exercise-img {
-        min-height: 250px;
+      .exercise-img,
+      .video-preview {
+        height: 260px;
       }
 
-      .count,
-      .done-btn {
-        margin-left: 46px;
+      .exercise-content,
+      .video-content {
+        min-height: auto;
       }
     }
   </style>
@@ -346,8 +367,13 @@
           <div class="sun">☀</div>
           <div>Утренний комплекс</div>
         </div>
-        <div class="counter"><span id="doneCount">0</span> из <span id="totalCount">0</span></div>
+
+        <div class="stats">
+          <div class="counter"><span id="doneCount">0</span> из <span id="totalCount">0</span></div>
+          <div class="timer">Время: <span id="timerValue">00:00</span></div>
+        </div>
       </div>
+
       <div class="progress">
         <div class="progress-fill" id="progressFill"></div>
       </div>
@@ -371,122 +397,51 @@
       <p>Сегодня вы уже сделали что-то хорошее для себя.</p>
     </section>
 
+    <section class="day-note">
+      <h2>На день</h2>
+      <p>В течение дня, когда появляется мысль, возвращайтесь к наблюдению.</p>
+      <ul>
+        <li>Кто это наблюдает?</li>
+        <li>Кто это сейчас комментирует?</li>
+        <li>Кто это фантазирует?</li>
+      </ul>
+      <p>И мягко направляйте внимание в тело.</p>
+    </section>
+
     <button class="reset-btn" id="resetBtn">Сбросить отметки</button>
   </div>
 
   <script>
     const exercises = [
-      {
-        title: "Наклоны в бабочке",
-        count: "50 раз",
-        image: "https://images.unsplash.com/photo-1599447421416-3414500d18a5?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        title: "Бабочка",
-        count: "50 раз",
-        image: "https://images.unsplash.com/photo-1599447421416-3414500d18a5?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        title: "Жим таза в бабочке",
-        count: "50 раз",
-        image: "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        title: "Обратная планка",
-        count: "50 раз",
-        image: "https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        title: "Скрутка",
-        count: "5 раз на каждую сторону",
-        image: "https://images.unsplash.com/photo-1593811167562-9cef47bfc4d7?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        title: "Наездник",
-        count: "50 раз",
-        image: "https://images.unsplash.com/photo-1602192509154-0b900ee1f851?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        title: "Приседание простата",
-        count: "50 раз",
-        image: "https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        title: "Отжимания",
-        count: "50 раз",
-        image: "https://images.unsplash.com/photo-1598971639058-ae5f1a965b42?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        title: "Наездник",
-        count: "50 раз",
-        image: "https://images.unsplash.com/photo-1602192509154-0b900ee1f851?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        title: "Поза голубя",
-        count: "50 раз",
-        image: "https://images.unsplash.com/photo-1593811167562-9cef47bfc4d7?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        title: "Кундалини поясница 1",
-        count: "50 раз",
-        image: "https://images.unsplash.com/photo-1545389336-cf090694435e?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        title: "Кундалини поясница 2",
-        count: "50 раз",
-        image: "https://images.unsplash.com/photo-1545389336-cf090694435e?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        title: "Кундалини грудь 1",
-        count: "50 раз",
-        image: "https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        title: "Кундалини грудь 2",
-        count: "50 раз",
-        image: "https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        title: "Кундалини грудь 3",
-        count: "50 раз",
-        image: "https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        title: "Кундалини грудь 4",
-        count: "50 раз",
-        image: "https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        title: "Кундалини грудь 5",
-        count: "50 раз",
-        image: "https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        title: "Кундалини плечи 1",
-        count: "50 раз",
-        image: "https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        title: "Подтягивания",
-        count: "10 раз",
-        image: "https://images.unsplash.com/photo-1599058917212-d750089bc07e?auto=format&fit=crop&w=900&q=80"
-      }
+      { title: "Наклоны в бабочке", count: "50 раз", image: "https://images.unsplash.com/photo-1599447421416-3414500d18a5?auto=format&fit=crop&w=900&q=80" },
+      { title: "Бабочка", count: "50 раз", image: "https://images.unsplash.com/photo-1599447421416-3414500d18a5?auto=format&fit=crop&w=900&q=80" },
+      { title: "Жим таза в бабочке", count: "50 раз", image: "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=900&q=80" },
+      { title: "Обратная планка", count: "50 раз", image: "https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?auto=format&fit=crop&w=900&q=80" },
+      { title: "Скрутка", count: "5 раз на каждую сторону", image: "https://images.unsplash.com/photo-1593811167562-9cef47bfc4d7?auto=format&fit=crop&w=900&q=80" },
+      { title: "Наездник", count: "50 раз", image: "https://images.unsplash.com/photo-1602192509154-0b900ee1f851?auto=format&fit=crop&w=900&q=80" },
+      { title: "Приседание простата", count: "50 раз", image: "https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=900&q=80" },
+      { title: "Отжимания", count: "50 раз", image: "https://images.unsplash.com/photo-1598971639058-ae5f1a965b42?auto=format&fit=crop&w=900&q=80" },
+      { title: "Наездник", count: "50 раз", image: "https://images.unsplash.com/photo-1602192509154-0b900ee1f851?auto=format&fit=crop&w=900&q=80" },
+      { title: "Поза голубя", count: "50 раз", image: "https://images.unsplash.com/photo-1593811167562-9cef47bfc4d7?auto=format&fit=crop&w=900&q=80" },
+      { title: "Кундалини поясница 1", count: "50 раз", image: "https://images.unsplash.com/photo-1545389336-cf090694435e?auto=format&fit=crop&w=900&q=80" },
+      { title: "Кундалини поясница 2", count: "50 раз", image: "https://images.unsplash.com/photo-1545389336-cf090694435e?auto=format&fit=crop&w=900&q=80" },
+      { title: "Кундалини грудь 1", count: "50 раз", image: "https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?auto=format&fit=crop&w=900&q=80" },
+      { title: "Кундалини грудь 2", count: "50 раз", image: "https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?auto=format&fit=crop&w=900&q=80" },
+      { title: "Кундалини грудь 3", count: "50 раз", image: "https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?auto=format&fit=crop&w=900&q=80" },
+      { title: "Кундалини грудь 4", count: "50 раз", image: "https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?auto=format&fit=crop&w=900&q=80" },
+      { title: "Кундалини грудь 5", count: "50 раз", image: "https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?auto=format&fit=crop&w=900&q=80" },
+      { title: "Кундалини плечи 1", count: "50 раз", image: "https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?auto=format&fit=crop&w=900&q=80" },
+      { title: "Подтягивания", count: "10 раз", image: "https://images.unsplash.com/photo-1599058917212-d750089bc07e?auto=format&fit=crop&w=900&q=80" }
     ];
 
     const videos = [
-      {
-        title: "Самомассаж шеи",
-        count: "Видео",
-        url: "https://youtu.be/30mrdoaUbGQ"
-      },
-      {
-        title: "Самомассаж лица",
-        count: "Видео",
-        url: "https://youtu.be/A4THQfX4ZHc"
-      }
+      { title: "Самомассаж шеи", count: "Видео", url: "https://youtu.be/30mrdoaUbGQ" },
+      { title: "Самомассаж лица", count: "Видео", url: "https://youtu.be/A4THQfX4ZHc" }
     ];
 
     const STORAGE_KEY = "morning-routine-done";
+    const TIMER_START_KEY = "morning-routine-timer-start";
+    const TIMER_STOP_KEY = "morning-routine-timer-stop";
 
     const exerciseList = document.getElementById("exerciseList");
     const videoList = document.getElementById("videoList");
@@ -494,20 +449,81 @@
     const totalCount = document.getElementById("totalCount");
     const progressFill = document.getElementById("progressFill");
     const resetBtn = document.getElementById("resetBtn");
+    const timerValue = document.getElementById("timerValue");
 
     const totalItems = exercises.length + videos.length;
 
     let doneState = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+    let timerInterval = null;
 
     function saveState() {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(doneState));
     }
 
+    function getCompletedCount() {
+      return Object.values(doneState).filter(Boolean).length;
+    }
+
+    function formatTime(milliseconds) {
+      const totalSeconds = Math.max(0, Math.floor(milliseconds / 1000));
+      const minutes = String(Math.floor(totalSeconds / 60)).padStart(2, "0");
+      const seconds = String(totalSeconds % 60).padStart(2, "0");
+      return `${minutes}:${seconds}`;
+    }
+
+    function getTimerStart() {
+      return Number(localStorage.getItem(TIMER_START_KEY)) || null;
+    }
+
+    function getTimerStop() {
+      return Number(localStorage.getItem(TIMER_STOP_KEY)) || null;
+    }
+
+    function startTimerIfNeeded() {
+      if (!getTimerStart()) {
+        localStorage.setItem(TIMER_START_KEY, String(Date.now()));
+      }
+
+      if (!timerInterval) {
+        timerInterval = setInterval(updateTimer, 1000);
+      }
+
+      updateTimer();
+    }
+
+    function stopTimerIfNeeded() {
+      const completed = getCompletedCount();
+
+      if (completed === totalItems && getTimerStart() && !getTimerStop()) {
+        localStorage.setItem(TIMER_STOP_KEY, String(Date.now()));
+      }
+
+      updateTimer();
+    }
+
+    function updateTimer() {
+      const start = getTimerStart();
+      const stop = getTimerStop();
+
+      if (!start) {
+        timerValue.textContent = "00:00";
+        return;
+      }
+
+      const endTime = stop || Date.now();
+      timerValue.textContent = formatTime(endTime - start);
+    }
+
     function updateProgress() {
-      const completed = Object.values(doneState).filter(Boolean).length;
+      const completed = getCompletedCount();
+
       doneCount.textContent = completed;
       totalCount.textContent = totalItems;
       progressFill.style.width = `${(completed / totalItems) * 100}%`;
+
+      if (completed === totalItems) {
+        stopTimerIfNeeded();
+      }
     }
 
     function toggleDone(id, button) {
@@ -517,7 +533,16 @@
       button.classList.toggle("done", doneState[id]);
       button.textContent = doneState[id] ? "✓ Выполнено" : "✓ Я выполнил";
 
+      if (getCompletedCount() > 0 && !getTimerStop()) {
+        startTimerIfNeeded();
+      }
+
+      if (getCompletedCount() < totalItems) {
+        localStorage.removeItem(TIMER_STOP_KEY);
+      }
+
       updateProgress();
+      updateTimer();
     }
 
     function renderExercises() {
@@ -576,23 +601,38 @@
 
     document.addEventListener("click", (event) => {
       if (event.target.classList.contains("done-btn")) {
-        const id = event.target.dataset.id;
-        toggleDone(id, event.target);
+        toggleDone(event.target.dataset.id, event.target);
       }
     });
 
     resetBtn.addEventListener("click", () => {
       doneState = {};
       saveState();
+
+      localStorage.removeItem(TIMER_START_KEY);
+      localStorage.removeItem(TIMER_STOP_KEY);
+
+      if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+      }
+
       renderExercises();
       renderVideos();
       updateProgress();
+      updateTimer();
+
       window.scrollTo({ top: 0, behavior: "smooth" });
     });
 
     renderExercises();
     renderVideos();
     updateProgress();
+    updateTimer();
+
+    if (getTimerStart() && !getTimerStop() && getCompletedCount() > 0) {
+      timerInterval = setInterval(updateTimer, 1000);
+    }
   </script>
 </body>
 </html>
