@@ -17,9 +17,7 @@
       --soft: #FFF1E8;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -390,14 +388,10 @@
     }
 
     @media (max-width: 520px) {
-      .brand {
-        font-size: 18px;
-      }
+      .brand { font-size: 18px; }
 
       .counter,
-      .timer {
-        font-size: 14px;
-      }
+      .timer { font-size: 14px; }
 
       .hero,
       .day-note {
@@ -406,24 +400,16 @@
       }
 
       .hero h1,
-      .day-note h2 {
-        font-size: 34px;
-      }
+      .day-note h2 { font-size: 34px; }
 
       .exercise,
-      .video-card {
-        grid-template-columns: 1fr;
-      }
+      .video-card { grid-template-columns: 1fr; }
 
       .exercise-img,
-      .video-preview {
-        height: 260px;
-      }
+      .video-preview { height: 260px; }
 
       .exercise-content,
-      .video-content {
-        min-height: auto;
-      }
+      .video-content { min-height: auto; }
     }
   </style>
 </head>
@@ -535,10 +521,26 @@
         },
         startCard: {
           title: "Вечерняя практика",
-          text: "Включи видео и сделай комплекс спокойно, без усилия и спешки.",
+          text: "Сначала сделай три упражнения Лоуэна, затем включи видео и спокойно заверши вечерний комплекс.",
           button: "Начать вечерний комплекс"
         },
-        exercises: [],
+        exercises: [
+          {
+            title: "Лоуэн 1",
+            count: "1 подход",
+            image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=900&q=80"
+          },
+          {
+            title: "Лоуэн 2",
+            count: "1 подход",
+            image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=900&q=80"
+          },
+          {
+            title: "Лоуэн 3",
+            count: "1 подход",
+            image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=900&q=80"
+          }
+        ],
         videos: [
           { title: "Гимнастика Шишонина", count: "Видео", url: "https://youtu.be/MR4Y4SuC3qk" }
         ],
