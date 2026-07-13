@@ -478,13 +478,13 @@
           <div id="routineTitle">Утренний комплекс</div>
         </div>
 
-        <div class="stats">
+        <div class="stats" id="statsBox">
           <div class="counter"><span id="doneCount">0</span> из <span id="totalCount">0</span></div>
           <div class="timer">Время: <span id="timerValue">00:00</span></div>
         </div>
       </div>
 
-      <div class="progress">
+      <div class="progress" id="progressBar">
         <div class="progress-fill" id="progressFill"></div>
       </div>
 
@@ -608,6 +608,7 @@
         title: "Адвайта",
         icon: "◌",
         storagePrefix: "advaita-routine",
+        enableTracking: false,
         heroClass: "hero",
         hero: {
           title: "Адвайта",
@@ -679,10 +680,7 @@
             ]
           }
         ],
-        finish: {
-          title: "Главная опора",
-          text: "Поспешай потихоньку. Смысл не в идеальном дне, а в сотнях спокойных возвращений внимания назад."
-        },
+        finish: null,
         dayNote: false
       }
     };
@@ -694,7 +692,9 @@
     const doneCount = document.getElementById("doneCount");
     const totalCount = document.getElementById("totalCount");
     const progressFill = document.getElementById("progressFill");
+    const progressBar = document.getElementById("progressBar");
     const resetBtn = document.getElementById("resetBtn");
+    const statsBox = document.getElementById("statsBox");
     const timerValue = document.getElementById("timerValue");
     const routineTitle = document.getElementById("routineTitle");
     const routineIcon = document.getElementById("routineIcon");
@@ -702,6 +702,10 @@
 
     function getRoutine() {
       return routines[currentTab];
+    }
+
+    function isTrackingEnabled() {
+      return getRoutine().enableTracking !== false;
     }
 
     function key(name) {
@@ -725,6 +729,8 @@
     }
 
     function getTotalItems() {
+      if (!isTrackingEnabled()) return 0;
+
       const routine = getRoutine();
       const exercisesTotal = (routine.exercises || []).length;
       const videosTotal = (routine.videos || []).length;
@@ -736,6 +742,8 @@
     }
 
     function getCompletedCount() {
+      if (!isTrackingEnabled()) return 0;
+
       return Object.values(getDoneState()).filter(Boolean).length;
     }
 
@@ -917,6 +925,7 @@
     function renderChecklistSections(routine) {
       const sections = routine.checklistSections || [];
       const state = getDoneState();
+      const trackingEnabled = routine.enableTracking !== false;
 
       if (!sections.length) return "";
 
@@ -932,9 +941,11 @@
                   <h3>${item.title}</h3>
                   <p>${item.text}</p>
                   <div class="practice-cue">${item.cue}</div>
+                  ${trackingEnabled ? `
                   <button class="done-btn ${state[id] ? "done" : ""}" data-id="${id}">
                     ${state[id] ? "✓ Выполнено" : "✓ Я сделал"}
                   </button>
+                  ` : ""}
                 </div>
               </div>
             </section>
@@ -944,6 +955,8 @@
     }
 
     function renderFinish(routine) {
+      if (!routine.finish) return "";
+
       return `
         <section class="finish">
           <h2>${routine.finish.title}</h2>
@@ -971,9 +984,13 @@
 
     function renderPage() {
       const routine = getRoutine();
+      const trackingEnabled = routine.enableTracking !== false;
 
       routineTitle.textContent = routine.title;
       routineIcon.textContent = routine.icon;
+      statsBox.style.display = trackingEnabled ? "" : "none";
+      progressBar.style.display = trackingEnabled ? "" : "none";
+      resetBtn.style.display = trackingEnabled ? "" : "none";
 
       tabButtons.forEach(btn => {
         btn.classList.toggle("active", btn.dataset.tab === currentTab);
@@ -998,7 +1015,7 @@
         timerInterval = null;
       }
 
-      if (getTimerStart() && !getTimerStop()) {
+      if (trackingEnabled && getTimerStart() && !getTimerStop()) {
         timerInterval = setInterval(updateTimer, 1000);
       }
     }
