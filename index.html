@@ -100,7 +100,7 @@
 
     .tabs {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(3, 1fr);
       gap: 8px;
       margin-top: 14px;
       padding: 5px;
@@ -315,11 +315,12 @@
     }
 
     .video-preview {
-      height: 210px;
+      min-height: 210px;
       background: var(--soft);
       display: flex;
       align-items: center;
       justify-content: center;
+      align-self: stretch;
       font-size: 54px;
       color: var(--orange);
     }
@@ -350,6 +351,53 @@
       color: #fff;
       font-weight: 800;
       padding: 13px 14px;
+    }
+
+    .practice-card {
+      padding: 24px;
+    }
+
+    .practice-card + .practice-card {
+      margin-top: 0;
+    }
+
+    .practice-card-head {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .practice-copy {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .practice-card h3 {
+      margin: 2px 0 8px;
+      font-size: 24px;
+      line-height: 1.15;
+    }
+
+    .practice-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.45;
+    }
+
+    .practice-cue {
+      margin-top: 14px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: var(--soft);
+      color: var(--text);
+      font-weight: 700;
+      line-height: 1.35;
+    }
+
+    .practice-card .done-btn {
+      width: 100%;
+      margin: 16px 0 0;
     }
 
     .finish {
@@ -393,6 +441,11 @@
       .counter,
       .timer { font-size: 14px; }
 
+      .tab-btn {
+        padding: 10px 8px;
+        font-size: 14px;
+      }
+
       .hero,
       .day-note {
         min-height: 310px;
@@ -405,8 +458,9 @@
       .exercise,
       .video-card { grid-template-columns: 1fr; }
 
-      .exercise-img,
-      .video-preview { height: 260px; }
+      .exercise-img { height: 260px; }
+
+      .video-preview { min-height: 260px; }
 
       .exercise-content,
       .video-content { min-height: auto; }
@@ -437,6 +491,7 @@
       <div class="tabs">
         <button class="tab-btn active" data-tab="morning">☀ Утро</button>
         <button class="tab-btn" data-tab="evening">🌙 Вечер</button>
+        <button class="tab-btn" data-tab="advaita">◌ Адвайта</button>
       </div>
     </header>
 
@@ -450,7 +505,7 @@
       morning: {
         title: "Утренний комплекс",
         icon: "☀",
-        storagePrefix: "morning-routine",
+        storagePrefix: "morning-routine-v2",
         heroClass: "hero",
         hero: {
           title: "Доброе утро!",
@@ -486,10 +541,7 @@
           { title: "Кундалини грудь 3", count: "50 раз", image: "https://static.tildacdn.com/tild3961-6165-4230-a166-333931343965/555_1.png?auto=format&fit=crop&w=900&q=80" },
           { title: "Кундалини грудь 4", count: "50 раз", image: "https://static.tildacdn.com/tild3930-3664-4564-b662-623863613034/666_1.png?auto=format&fit=crop&w=900&q=80" },
           { title: "Кундалини грудь 5", count: "50 раз", image: "https://static.tildacdn.com/tild3435-3463-4937-a637-643836666237/11__.png?auto=format&fit=crop&w=900&q=80" },
-          { title: "Кундалини грудь 6", count: "50 раз", image: "https://static.tildacdn.com/tild3565-6534-4162-b135-616362343630/333_1.png?auto=format&fit=crop&w=900&q=80" },
-          { title: "Кундалини грудь 7", count: "50 раз", image: "https://static.tildacdn.com/tild6531-3339-4730-b835-323635633963/12__.png?auto=format&fit=crop&w=900&q=80" },
           { title: "Кундалини грудь 8", count: "50 раз", image: "https://static.tildacdn.com/tild3861-6539-4338-a236-303234323432/13__.png?auto=format&fit=crop&w=900&q=80" },
-          { title: "Кундалини грудь 9", count: "50 раз", image: "https://static.tildacdn.com/tild3962-3663-4366-a534-616561326139/14__.png?auto=format&fit=crop&w=900&q=80" },
           { title: "Кундалини плечи 1", count: "50 раз", image: "https://static.tildacdn.com/tild6562-6165-4832-b765-383730396261/13-1__.png?auto=format&fit=crop&w=900&q=80" },
           { title: "Подтягивания", count: "10 раз", image: "https://images.unsplash.com/photo-1599058917212-d750089bc07e?auto=format&fit=crop&w=900&q=80" },
           { title: "Гимнастика Гермеса", count: "9 раз", image: "https://images.unsplash.com/photo-1599058917212-d750089bc07e?auto=format&fit=crop&w=900&q=80" }
@@ -542,11 +594,94 @@
           }
         ],
         videos: [
-          { title: "Гимнастика Шишонина", count: "Видео", url: "https://youtu.be/MR4Y4SuC3qk" }
+          { title: "Гимнастика Шишонина", count: "Видео", url: "https://youtu.be/MR4Y4SuC3qk" },
+          { title: "Дыхание Вима Хофа", count: "Видео", url: "https://youtu.be/R2K7ZHsnypI?t=85" }
         ],
         finish: {
           title: "Вечерний комплекс завершён",
           text: "День можно отпустить. Тело уже получило внимание."
+        },
+        dayNote: false
+      },
+
+      advaita: {
+        title: "Адвайта",
+        icon: "◌",
+        storagePrefix: "advaita-routine",
+        heroClass: "hero",
+        hero: {
+          title: "Адвайта",
+          subtitle: "",
+          paragraphs: []
+        },
+        startCard: null,
+        exercises: [],
+        videos: [],
+        checklistSections: [
+          {
+            title: "Утро",
+            items: [
+              {
+                title: "Поймай первое мгновение",
+                text: "Не вставай резко. Не давай уму сразу же навалить на тебя список дел, тревог, воспоминаний или ожиданий.",
+                cue: "Открыл глаза — не входи сразу в текст."
+              },
+              {
+                title: "Приведи себя в порядок на уровне тела и энергии",
+                text: "Сделай пранаяму и концентрацию.",
+                cue: "Сначала собери тело и дыхание."
+              },
+              {
+                title: "Стань свидетелем",
+                text: "С самого утра зафиксируй позицию Наблюдателя. Ум и Эго сразу попытается включить комментатора. Не вовлекайся в этот автоматический поток диалогов.",
+                cue: "Не спорь с мыслями. Останься тем, кто видит."
+              }
+            ]
+          },
+          {
+            title: "День",
+            items: [
+              {
+                title: "Будь бдительным",
+                text: "В течение дня не позволяй уму незаметно уносить тебя в текст, защиту и автоматические реакции.",
+                cue: "Проверяй: где сейчас внимание?"
+              },
+              {
+                title: "Осознанная речь",
+                text: "В течение дня следи за тем, как и что ты говоришь. Прежде чем сказать делай вдох и выдох и затем говори. 90% нашего текста — это либо саморисование, либо оправдание, либо защита.",
+                cue: "Когда перестаешь врать и защищать эго, речь становится редкой, точной и уместной."
+              },
+              {
+                title: "Встреча с «учителями»",
+                text: "Любой деструктивный человек, коллега или ситуация, которая тебя раздражает, — это твой лучший учитель в реальном времени. Если тебя кто-то провоцирует, не включай ответную агрессию или мысленные оправдания.",
+                cue: "Смотри в себя."
+              },
+              {
+                title: "Шаг 1. Стоять. Всё. Я вижу.",
+                text: "Как только внутри начинается ментальный диалог, обида, ярость, зависть, ревность или жалость к себе, осознай: это говоришь не ты, это включилась автоматическая программа ума, которая хочет высосать твою энергию.",
+                cue: "Сразу останови поток: «Стоять. Всё. Я вижу.»"
+              },
+              {
+                title: "Шаг 2. Поиск следа в теле",
+                text: "Останови поток слов в голове и молча направь всё внимание на физические параметры возникшего в теле зажима: тяжесть, ком, жар. Не анализируй его умом.",
+                cue: "Внимание не в историю, а в ощущение."
+              },
+              {
+                title: "Шаг 3. «Выдувание» информации и сдача",
+                text: "Тотально разреши зажиму быть и на выдохе мысленно «выдувай» эту вибрацию наружу сквозь пористое тело, возвращая высвобожденную энергию обратно в систему.",
+                cue: "Не борись. Выдыхай и освобождай."
+              },
+              {
+                title: "Шаг 4. Возврат к Источнику",
+                text: "В наступившее мгновение тишины сразу разверни внимание на самого Наблюдателя вопросом: «А КТО сейчас чувствует это облегчение?», упираясь в безмолвное Присутствие.",
+                cue: "Не забирай это в эго. Вернись к Источнику."
+              }
+            ]
+          }
+        ],
+        finish: {
+          title: "Главная опора",
+          text: "Поспешай потихоньку. Смысл не в идеальном дне, а в сотнях спокойных возвращений внимания назад."
         },
         dayNote: false
       }
@@ -591,7 +726,13 @@
 
     function getTotalItems() {
       const routine = getRoutine();
-      return routine.exercises.length + routine.videos.length;
+      const exercisesTotal = (routine.exercises || []).length;
+      const videosTotal = (routine.videos || []).length;
+      const checklistTotal = (routine.checklistSections || []).reduce((total, section) => {
+        return total + (section.items || []).length;
+      }, 0);
+
+      return exercisesTotal + videosTotal + checklistTotal;
     }
 
     function getCompletedCount() {
@@ -692,11 +833,16 @@
     }
 
     function renderHero(routine) {
+      const hasSubtitle = Boolean(routine.hero.subtitle);
+      const hasParagraphs = (routine.hero.paragraphs || []).length > 0;
+
+      if (!hasSubtitle && !hasParagraphs) return "";
+
       return `
         <section class="${routine.heroClass}">
           <h1>${routine.hero.title}</h1>
-          <h2>${routine.hero.subtitle}</h2>
-          ${routine.hero.paragraphs.map(text => `<p>${text}</p>`).join("")}
+          ${hasSubtitle ? `<h2>${routine.hero.subtitle}</h2>` : ""}
+          ${(routine.hero.paragraphs || []).map(text => `<p>${text}</p>`).join("")}
         </section>
       `;
     }
@@ -714,6 +860,8 @@
     }
 
     function renderExercises(routine) {
+      if (!routine.exercises || !routine.exercises.length) return "";
+
       const state = getDoneState();
 
       return routine.exercises.map((item, index) => {
@@ -740,7 +888,7 @@
     function renderVideos(routine) {
       const state = getDoneState();
 
-      if (!routine.videos.length) return "";
+      if (!routine.videos || !routine.videos.length) return "";
 
       return `
         <h2 class="section-title">Видео</h2>
@@ -764,6 +912,35 @@
           `;
         }).join("")}
       `;
+    }
+
+    function renderChecklistSections(routine) {
+      const sections = routine.checklistSections || [];
+      const state = getDoneState();
+
+      if (!sections.length) return "";
+
+      return sections.map((section, sectionIndex) => `
+        <h2 class="section-title">${section.title}</h2>
+        ${(section.items || []).map((item, itemIndex) => {
+          const id = `check-${sectionIndex + 1}-${itemIndex + 1}`;
+
+          return `
+            <section class="card practice-card">
+              <div class="practice-card-head">
+                <div class="practice-copy">
+                  <h3>${item.title}</h3>
+                  <p>${item.text}</p>
+                  <div class="practice-cue">${item.cue}</div>
+                  <button class="done-btn ${state[id] ? "done" : ""}" data-id="${id}">
+                    ${state[id] ? "✓ Выполнено" : "✓ Я сделал"}
+                  </button>
+                </div>
+              </div>
+            </section>
+          `;
+        }).join("")}
+      `).join("");
     }
 
     function renderFinish(routine) {
@@ -807,6 +984,7 @@
         ${renderStartCard(routine)}
         ${renderExercises(routine)}
         ${renderVideos(routine)}
+        ${renderChecklistSections(routine)}
         ${renderFinish(routine)}
         ${renderDayNote(routine)}
       `;
