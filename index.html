@@ -124,6 +124,22 @@
       color: #fff;
     }
 
+    .playlist-link {
+      margin-top: 10px;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border-radius: 14px;
+      background: var(--soft);
+      color: var(--orange);
+      border: 1px solid rgba(255, 69, 0, 0.18);
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 800;
+    }
+
     .hero,
     .day-note {
       margin: 18px;
@@ -493,6 +509,10 @@
         <button class="tab-btn" data-tab="evening">🌙 Вечер</button>
         <button class="tab-btn" data-tab="advaita">◌ Адвайта</button>
       </div>
+
+      <a class="playlist-link" href="https://youtu.be/ePb9m58EUWo?si=GqUSqJDWq56CSC7F" target="_blank" rel="noopener">
+        ▶ Плейлист перед практикой
+      </a>
     </header>
 
     <main id="contentRoot"></main>
@@ -505,7 +525,7 @@
       morning: {
         title: "Утренний комплекс",
         icon: "☀",
-        storagePrefix: "morning-routine-v3",
+        storagePrefix: "morning-routine-v4",
         heroClass: "hero",
         hero: {
           title: "Доброе утро!",
@@ -531,7 +551,14 @@
           { title: "Наездник", count: "50 раз", image: "https://static.tildacdn.com/tild6562-3933-4166-b233-663636636430/6_.png?auto=format&fit=crop&w=900&q=80" },
           { title: "Приседание простата", count: "50 раз", image: "https://static.tildacdn.com/tild6262-3066-4462-b730-613665663265/6-1__.png?auto=format&fit=crop&w=900&q=80" },
           { title: "Отжимания", count: "50 раз", image: "https://static.tildacdn.com/tild6537-3863-4130-a264-373135343264/6-2_.png?auto=format&fit=crop&w=900&q=80" },
-          { title: "Наездник", count: "50 раз", image: "https://static.tildacdn.com/tild3039-6463-4531-a234-643237346233/7_.png?auto=format&fit=crop&w=900&q=80" },
+          { title: "Наездник + шаги(покачивание)", count: "50 раз", image: "https://static.tildacdn.com/tild3039-6463-4531-a234-643237346233/7_.png?auto=format&fit=crop&w=900&q=80" },
+          { title: "Низкий выпад", count: "по 30 секунд", image: "assets/exercises/morning-low-lunge.jpg" },
+          { title: "Выпад бегуна", count: "по 30 секунд", image: "assets/exercises/morning-runner-lunge.jpg" },
+          { title: "Боковой выпад", count: "по 30 секунд", image: "assets/exercises/morning-side-lunge.jpg" },
+          { title: "Широкая складка", count: "1 минута", image: "assets/exercises/morning-wide-forward-fold.jpg" },
+          { title: "Складка к ноге", count: "по 30 секунд", image: "assets/exercises/morning-half-butterfly-fold.jpg" },
+          { title: "Бабочка лежа", count: "1 минута", image: "assets/exercises/morning-reclined-butterfly.jpg" },
+          { title: "Колени к груди", count: "1 минута", image: "assets/exercises/morning-knees-to-chest.jpg" },
           { title: "Поза голубя", count: "50 раз", image: "https://static.tildacdn.com/tild6436-6166-4431-a131-616138623665/7-1__.png?auto=format&fit=crop&w=900&q=80" },
           { title: "Кундалини поясница 1", count: "50 раз", image: "https://static.tildacdn.com/tild6236-6335-4537-b239-626130636234/8__.png?auto=format&fit=crop&w=900&q=80" },
           { title: "Кундалини грудь 1", count: "50 раз", image: "https://static.tildacdn.com/tild3661-6162-4637-b866-326333313034/10__.png?auto=format&fit=crop&w=900&q=80" },
