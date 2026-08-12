@@ -525,7 +525,7 @@
       morning: {
         title: "Утренний комплекс",
         icon: "☀",
-        storagePrefix: "morning-routine-v10",
+        storagePrefix: "morning-routine-v12",
         heroClass: "hero",
         hero: {
           title: "Доброе утро!",
@@ -545,10 +545,10 @@
           { title: "Наклоны в бабочке", count: "50 раз", image: "https://static.tildacdn.com/tild3130-3438-4530-a330-306333623030/1__.png?auto=format&fit=crop&w=900&q=80" },
           { title: "Бабочка", count: "50 раз", image: "https://static.tildacdn.com/tild6438-6663-4963-b662-313434356438/2__.png?auto=format&fit=crop&w=900&q=80" },
           { title: "Жим таза в бабочке", count: "50 раз", image: "https://static.tildacdn.com/tild6436-3163-4430-b238-323633373563/3____.png?auto=format&fit=crop&w=900&q=80" },
-          { title: "Обратная планка", count: "50 раз", image: "https://static.tildacdn.com/tild3435-6135-4039-b266-313166383066/4__.png?auto=format&fit=crop&w=900&q=80" },
           { title: "Скрутка таз", count: "по 25 раз", image: "https://static.tildacdn.com/tild3231-6138-4435-a537-646662613430/111_1.png?auto=format&fit=crop&w=900&q=80" },
-          { title: "Лягушка таз", count: "1 минута", image: "assets/exercises/morning-prone-frog-kicks.jpg" },
+          { title: "Лягушка таз", count: "1 минута", image: "assets/exercises/morning-prone-frog-kicks.jpg", imagePosition: "center top" },
           { title: "Скрутка", count: "5 раз на каждую сторону", image: "https://static.tildacdn.com/tild3265-3338-4137-b332-643066366464/5_.png?auto=format&fit=crop&w=900&q=80" },
+          { title: "Обратная планка", count: "50 раз", image: "https://static.tildacdn.com/tild3435-6135-4039-b266-313166383066/4__.png?auto=format&fit=crop&w=900&q=80" },
           { title: "Наездник", count: "50 раз", image: "https://static.tildacdn.com/tild6562-3933-4166-b233-663636636430/6_.png?auto=format&fit=crop&w=900&q=80" },
           { title: "Таз у стены", count: "по 30 секунд", image: "assets/exercises/morning-wall-pelvis-step.jpg" },
           { title: "Приседание простата", count: "50 раз", image: "https://static.tildacdn.com/tild6262-3066-4462-b730-613665663265/6-1__.png?auto=format&fit=crop&w=900&q=80" },
@@ -558,10 +558,10 @@
           { title: "Выпад раскрытие таза", count: "по 30 секунд", image: "assets/exercises/morning-kneeling-hip-release.jpg" },
           { title: "Низкий выпад", count: "по 30 секунд", image: "assets/exercises/morning-low-lunge.jpg" },
           { title: "Выпад бегуна", count: "по 30 секунд", image: "assets/exercises/morning-runner-lunge.jpg" },
+          { title: "Поза голубя", count: "по 30 секунд", image: "assets/exercises/morning-pigeon-pose.jpg" },
           { title: "Широкая складка", count: "1 минута", image: "assets/exercises/morning-wide-forward-fold.jpg" },
           { title: "Складка к ноге", count: "по 30 секунд", image: "assets/exercises/morning-half-butterfly-fold.jpg" },
           { title: "Бабочка лежа", count: "1 минута", image: "assets/exercises/morning-reclined-butterfly.jpg" },
-          { title: "Колени к груди", count: "1 минута", image: "assets/exercises/morning-knees-to-chest.jpg" },
           { title: "Кундалини поясница 1", count: "50 раз", image: "https://static.tildacdn.com/tild6236-6335-4537-b239-626130636234/8__.png?auto=format&fit=crop&w=900&q=80" },
           { title: "Кундалини грудь 1", count: "50 раз", image: "https://static.tildacdn.com/tild3661-6162-4637-b866-326333313034/10__.png?auto=format&fit=crop&w=900&q=80" },
           { title: "Кундалини грудь 2", count: "50 раз", image: "https://static.tildacdn.com/tild6264-3732-4337-b462-643234616431/222_1.png?auto=format&fit=crop&w=900&q=80" },
@@ -905,7 +905,7 @@
 
         return `
           <section class="card exercise">
-            <img class="exercise-img" src="${item.image}" alt="${item.title}">
+            <img class="exercise-img" src="${item.image}" alt="${item.title}"${item.imagePosition ? ` style="object-position: ${item.imagePosition};"` : ""}>
             <div class="exercise-content">
               <div class="exercise-head">
                 <div class="num">${index + 1}</div>
